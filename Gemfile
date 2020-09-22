@@ -63,3 +63,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'bootstrap', '~> 4.3', '>= 4.3.1'
 # Css for font awesome icons
 gem 'font-awesome-sass', '~> 5.6', '>= 5.6.1'
+# Devise for user authorization
+gem 'devise', '~> 4.7'
