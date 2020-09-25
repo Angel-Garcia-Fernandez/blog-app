@@ -1,0 +1,10 @@
+<%= render 'posts/table', posts: @draft, actions: [:show, :edit, :publish, :destroy], title: 'Draft Posts' %>
+<%= render 'posts/table', posts: @published, actions: [:show, :destroy], title: 'Published Posts' %>
+
+<div class="row">
+  <div class="col-sm">
+    <% post_links(@post, :new).map do |action| %>
+        <%= action %>
+    <% end %>
+  </div>
+</div>

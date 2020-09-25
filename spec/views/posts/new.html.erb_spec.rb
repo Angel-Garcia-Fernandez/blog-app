@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'posts/new', type: :view do
+  let(:user) { create(:user) }
+
   before(:each) do
+    sign_in user
     assign(:post, build(:post))
   end
 

@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'posts/edit', type: :view do
+  let(:user) { create(:user) }
+
   before(:each) do
+    sign_in user
     @post = assign(:post, create(:post))
   end
 

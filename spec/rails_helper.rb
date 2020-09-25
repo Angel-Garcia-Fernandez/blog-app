@@ -67,6 +67,7 @@ RSpec.configure do |config|
 
   # Adding Devise Helpers to request type specs
   config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Devise::Test::ControllerHelpers, type: :view
 
   # Adding time helpers to tests
   config.include ActiveSupport::Testing::TimeHelpers

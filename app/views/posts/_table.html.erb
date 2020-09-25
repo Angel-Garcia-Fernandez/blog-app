@@ -1,0 +1,33 @@
+<% title = local_assigns[:title] || 'Posts' %>
+
+<div class="row">
+  <div class="col-sm">
+    <h1><%= title %></h1>
+  </div>
+</div>
+<div class="row">
+  <% if posts.any? %>
+    <% posts.each do |post| %>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><%= post.title %></h5>
+              <p class="card-text"><%= truncate(post.body, length: 100, separator: ' ') %></p>
+            </div>
+            <div class="card-body">
+              <p class="card-subtitle"><%= post.author_email %></p>
+              <p class="card-subtitle"><%= post.published_at.try(:to_s, :db) %></p>
+              <p class="card-subtitle">Comments <span class="badge badge-dark"><%= post.comments.count %></span></p>
+              <% post_links(post, actions).each do |link| %>
+                  <td><%= link %></td>
+              <% end %>
+            </div>
+          </div>
+        </div>
+    <% end %>
+  <% else %>
+    <div class="col-sm">
+      <p>No posts yet.</p>
+    </div>
+  <% end %>
+</div>

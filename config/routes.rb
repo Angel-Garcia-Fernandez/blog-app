@@ -5,5 +5,13 @@ Rails.application.routes.draw do
 
   root to: 'posts#index'
 
-  resources :posts
+  resources :posts do
+    resources :publishes, only: :create
+    resources :comments, except: :index
+  end
+
+  resources :comments, only: [] do
+    resources :reactions, except: [:show, :index]
+  end
+  resources :my_posts, only: :index
 end
