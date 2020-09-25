@@ -1,10 +1,10 @@
 module ReactionsHelper
-  def reaction_links(comment)
+  def reaction_links(comment, user)
     types = { smile: { icon: 'fa-smile-wink', color: 'yellow'},
               thumbs_up: { icon: 'fa-thumbs-up', color: 'royalblue'},
               like: { icon: 'fa-heart', color: 'red'} }
     types.keys.map do |type|
-      reaction = comment.reactions.find_or_initialize_by(author: current_user, reaction_type: type)
+      reaction = comment.reactions.find_or_initialize_by(author: user, reaction_type: type)
       if reaction.persisted?
         link_to comment_reaction_path(comment, reaction), method: :delete, class: 'btn btn-dark' do
           concat content_tag(:i,'', class: "fas #{types[type][:icon]}", style: "color: #{types[type][:color]}")

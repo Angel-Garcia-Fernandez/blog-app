@@ -20,7 +20,7 @@
               </p>
               <p class="card-subtitle text-muted"><%= "By #{post.author_email}" %></p>
               <p class="card-subtitle text-muted">Comments <span class="badge badge-dark"><%= post.comments.count %></span></p>
-              <% post_links(post, actions).each do |link| %>
+              <% post_links(post, current_user, actions).each do |link| %>
                   <td><%= link %></td>
               <% end %>
             </div>

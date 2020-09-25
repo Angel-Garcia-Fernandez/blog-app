@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="col-sm mb-3">
-    <% post_links(@post, :new).map do |action| %>
+    <% post_links(@post, current_user, :new).map do |action| %>
         <%= action %>
     <% end %>
   </div>

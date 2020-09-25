@@ -10,10 +10,11 @@ class ReactionsController < ApplicationController
 
     respond_to do |format|
       if @reaction.save
+        PostRelayJob.perform_later(@comment.post, current_user)
         format.html { redirect_to @comment.post, notice: 'Reaction was successfully created.' }
         format.json { render :show, status: :created, location: @reaction }
       else
-        format.html { redirect_to @comment.post, notice: 'Reaction was successfully created.' }
+        format.html { redirect_to @comment.post, notice: 'Reaction counldn\'t be created.' }
         format.json { render json: @reaction.errors, status: :unprocessable_entity }
       end
     end
@@ -22,10 +23,17 @@ class ReactionsController < ApplicationController
   # DELETE /reactions/1
   # DELETE /reactions/1.json
   def destroy
-    @reaction.destroy
-    respond_to do |format|
-      format.html { redirect_to @comment.post, notice: 'Reaction was successfully destroyed.' }
-      format.json { head :no_content }
+    if @reaction.present?
+      @reaction.destroy
+      PostRelayJob.perform_later(@comment.post, current_user)
+      respond_to do |format|
+        format.html { redirect_to @comment.post, notice: 'Reaction was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to @comment.post, notice: 'Reaction was already destroyed.' }
+      end
     end
   end
 
@@ -35,7 +43,7 @@ class ReactionsController < ApplicationController
     end
 
     def set_reaction
-      @reaction = Reaction.find(params[:id])
+      @reaction = Reaction.find_by(id: params[:id])
     end
 
     # Only allow a list of trusted parameters through.

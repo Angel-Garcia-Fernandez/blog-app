@@ -1,6 +1,6 @@
 module PostsHelper
-  def post_links(post, actions)
-    owner = post && post.author == current_user
+  def post_links(post, user, actions)
+    owner = post && post.author == user
     published = post && post.published?
     {
         new: -> { link_to('New Post', new_post_path, class: 'btn btn-primary') },

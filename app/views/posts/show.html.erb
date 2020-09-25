@@ -3,30 +3,13 @@
     <h1>Post</h1>
   </div>
 </div>
+
+<%= render 'post', post: @post, user: current_user %>
+
 <div class="row">
   <div class="col-sm mb-3">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title"><%= @post.title %></h5>
-        <p class="card-text"><%= @post.body %></p>
-      </div>
-      <div class="card-body">
-        <p class="card-subtitle text-muted">
-          <%= @post.published? ? "Published #{time_ago_in_words(@post.published_at)} ago" : "Created #{time_ago_in_words(@post.created_at)} ago" %>
-          <%= "by #{@post.author_email}" %>
-        </p>
-        <div class="actions">
-          <% post_links(@post, [:edit, :publish]).map do |action| %>
-              <%= action %>
-          <% end %>
-        </div>
-      </div>
-    </div>
+    <% comment_links(@comment, current_user, [:new, :back]).map do |action| %>
+        <%= action %>
+    <% end %>
   </div>
 </div>
-
-<%= render 'comments/table', comments: @post.comments.select(&:persisted?), actions: [:edit, :destroy] if @post.published? %>
-
-<% comment_links(@comment, [:new, :back]).map do |action| %>
-    <%= action %>
-<% end %>

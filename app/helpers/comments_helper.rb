@@ -1,6 +1,6 @@
 module CommentsHelper
-  def comment_links(comment, actions)
-    owner = comment && comment.author == current_user
+  def comment_links(comment, user, actions)
+    owner = comment && comment.author == user
     post = comment.post
     published = post.published?
     {

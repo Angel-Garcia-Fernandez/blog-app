@@ -48,9 +48,9 @@ RSpec.describe '/comments', type: :request do
         }.to change(Comment, :count).by(0)
       end
 
-      it 'renders a successful response (i.e. to display the \'new\' template)' do
+      it 'redirects to the post' do
         post post_comments_url(blog_post), params: { comment: invalid_attributes }
-        expect(response).to be_successful
+        expect(response).to redirect_to(post_url(blog_post))
       end
     end
   end

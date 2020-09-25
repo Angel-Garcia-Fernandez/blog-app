@@ -19,10 +19,11 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
+        PostRelayJob.perform_later(@post, current_user)
         format.html { redirect_to @post, notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
-        format.html { render :new }
+        format.html { redirect_to @post, notice: 'Comment couldn\'t be created' }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
@@ -33,6 +34,7 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
+        PostRelayJob.perform_later(@post, current_user)
         format.html { redirect_to @post, notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
       else
@@ -46,6 +48,7 @@ class CommentsController < ApplicationController
   # DELETE /comments/1.json
   def destroy
     @comment.destroy
+    PostRelayJob.perform_later(@post, current_user)
     respond_to do |format|
       format.html { redirect_to @post, notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }

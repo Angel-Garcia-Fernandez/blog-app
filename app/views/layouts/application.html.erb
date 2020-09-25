@@ -11,12 +11,12 @@
 
 <body>
   <%= render 'shared/main_menu' %>
-  <%= render 'shared/alerts' %>
 
-  <div class="container-md">
+  <main class="container-md" role="main">
+    <%= render 'shared/alerts' %>
     <%= yield %>
-  </div>
+  </main>
 
   <%= render 'shared/footer' %>
-  </body>
+</body>
 </html>
