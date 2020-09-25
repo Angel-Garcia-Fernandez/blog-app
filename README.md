@@ -1,24 +1,22 @@
-# README
+# Blog-App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a simple app that simulates a blog site.
 
-Things you may want to cover:
+There's users, posts, comments and reactions.
 
-* Ruby version
+Users need to sign-up to access the blog services.
 
-* System dependencies
+Posts can be drafts or published, which will make them visible to the rest of users.
 
-* Configuration
+Post page is updated dinamically with ActionCable
 
-* Database creation
 
-* Database initialization
+## Installation
 
-* How to run the test suite
+- Clone this repository locally.
+- `bundle install` to install all required dependencies.
+- `rails db:create db:migrate` to setup the database.
+- `rails s` to start the local server.
 
-* Services (job queues, cache servers, search engines, etc.)
+After this you will be able to access the web-app from your browser in `localhost:3000`.
 
-* Deployment instructions
-
-* ...
