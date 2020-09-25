@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-sm">
+    <h1>New Comment</h1>
+  </div>
+</div>
+
+<%= render 'form', comment: @comment %>
+
+<div class="row">
+  <div class="col-sm">
+    <% comment_links(@comment, :back).map do |action| %>
+        <%= action %>
+    <% end %>
+  </div>
+</div>
+
+

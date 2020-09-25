@@ -1,24 +1,30 @@
 <% title = local_assigns[:title] || 'Comments' %>
 
-<h1><%= title %></h1>
-<table>
-  <thead>
-  <tr>
-    <th>Body</th>
-    <th>Author</th>
-    <th colspan="<%= actions.size %>"></th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% comments.each do |comment| %>
-      <tr>
-        <td><%= comment.body %></td>
-        <td><%= comment.author_email %></td>
-        <% comment_links(comment, actions).each do |link| %>
-            <td><%= link %></td>
-        <% end %>
-      </tr>
+<div class="row">
+  <div class="col-sm">
+    <h1><%= title %></h1>
+  </div>
+</div>
+<div class="row">
+  <% if comments.any? %>
+      <% comments.each do |comment| %>
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-body">
+                <p class="card-text"><%= comment.body %></p>
+              </div>
+              <div class="card-body">
+                <p class="card-subtitle text-muted"><%= "Commented #{time_ago_in_words(comment.created_at)} ago by #{comment.author_email}" %></p>
+                <% comment_links(comment, actions).each do |link| %>
+                    <td><%= link %></td>
+                <% end %>
+              </div>
+            </div>
+          </div>
+      <% end %>
+  <% else %>
+      <div class="col-sm">
+        <p>No comments yet.</p>
+      </div>
   <% end %>
-  </tbody>
-</table>
+</div>

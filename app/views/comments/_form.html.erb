@@ -1,22 +1,25 @@
-<%= form_with(model: [comment.post ,comment], local: true) do |form| %>
-  <% if comment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+<div class="row">
+  <div class="col-sm">
+    <%= form_with(model: [comment.post ,comment], local: true) do |form| %>
+      <% if comment.errors.any? %>
+        <div id="error_explanation" class="alert alert-danger" role="alert">
+          <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+          <ul>
+            <% comment.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-      <ul>
-        <% comment.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+      <div class="form-group">
+        <strong><%= form.label :body %>:</strong>
+        <%= form.text_area :body, class: 'form-control' %>
+      </div>
 
-  <div class="field">
-    <strong><%= form.label :body %>:</strong>
-    <%= form.text_area :body, class: 'form-control' %>
+      <div class="actions">
+        <%= form.submit 'Save', class: 'btn btn-success' %>
+      </div>
+    <% end %>
   </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>
