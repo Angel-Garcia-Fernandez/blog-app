@@ -10,6 +10,7 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    redirect_to posts_path, notice: 'You are not allowed to see that post' unless @post.published? || @post.author == current_user
     @comment = @post.comments.build
   end
 
