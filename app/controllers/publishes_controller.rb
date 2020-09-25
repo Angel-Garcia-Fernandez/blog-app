@@ -8,10 +8,10 @@ class PublishesController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to my_posts_path, notice: 'Publish was successfully created.' }
+        format.html { redirect_to my_posts_path, notice: 'Post was successfully published.' }
         format.json { render :show, status: :created, location: @post }
       else
-        format.html { render :new }
+        format.html { redirect_to my_posts_path, notice: 'Could not publish post successfully.' }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end

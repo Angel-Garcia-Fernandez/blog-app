@@ -5,8 +5,8 @@ class Reaction < ApplicationRecord
 
   delegate :email, to: :author, prefix: true, allow_nil: true
 
-  enum type: [:like, :smile, :thumbs_up]
+  enum reaction_type: [:like, :smile, :thumbs_up]
 
-  validates_presence_of :type
-  validates_uniqueness_of :type, scope: [:user_id, :comment_id]
+  validates_presence_of :reaction_type
+  validates_uniqueness_of :reaction_type, scope: [:user_id, :comment_id]
 end
