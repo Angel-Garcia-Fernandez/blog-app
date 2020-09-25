@@ -2,7 +2,7 @@
 <%= render 'posts/table', posts: @published, actions: [:show, :destroy], title: 'Published Posts' %>
 
 <div class="row">
-  <div class="col-sm">
+  <div class="col-sm mb-3">
     <% post_links(@post, :new).map do |action| %>
         <%= action %>
     <% end %>

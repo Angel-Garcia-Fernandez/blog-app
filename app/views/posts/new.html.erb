@@ -7,7 +7,7 @@
 <%= render 'form', post: @post %>
 
 <div class="row">
-  <div class="col-sm">
+  <div class="col-sm mb-3">
     <% post_links(@post, :back).map do |action| %>
         <%= action %>
     <% end %>
