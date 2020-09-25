@@ -15,9 +15,11 @@
               <p class="card-text"><%= truncate(post.body, length: 100, separator: ' ') %></p>
             </div>
             <div class="card-body">
-              <p class="card-subtitle"><%= post.author_email %></p>
-              <p class="card-subtitle"><%= post.published_at.try(:to_s, :db) %></p>
-              <p class="card-subtitle">Comments <span class="badge badge-dark"><%= post.comments.count %></span></p>
+              <p class="card-subtitle text-muted">
+                <%= post.published? ? "Published #{time_ago_in_words(post.published_at)} ago" : "Created #{time_ago_in_words(post.created_at)} ago" %>
+              </p>
+              <p class="card-subtitle text-muted"><%= "By #{post.author_email}" %></p>
+              <p class="card-subtitle text-muted">Comments <span class="badge badge-dark"><%= post.comments.count %></span></p>
               <% post_links(post, actions).each do |link| %>
                   <td><%= link %></td>
               <% end %>

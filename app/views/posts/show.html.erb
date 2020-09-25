@@ -12,9 +12,10 @@
         <p class="card-text"><%= @post.body %></p>
       </div>
       <div class="card-body">
-        <p class="card-subtitle"><%= @post.author_email %></p>
-        <p class="card-subtitle"><%= @post.published_at.try(:to_s, :db) %></p>
-
+        <p class="card-subtitle text-muted">
+          <%= @post.published? ? "Published #{time_ago_in_words(@post.published_at)} ago" : "Created #{time_ago_in_words(@post.created_at)} ago" %>
+          <%= "by #{@post.author_email}" %>
+        </p>
         <div class="actions">
           <% post_links(@post, [:edit, :publish]).map do |action| %>
               <%= action %>

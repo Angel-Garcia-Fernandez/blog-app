@@ -9,7 +9,7 @@ class Post < ApplicationRecord
 
   validates_presence_of :title, :body
 
-  scope :published, -> { where.not(published_at: nil) }
+  scope :published, -> { where.not(published_at: nil).order(published_at: :desc) }
   scope :draft, -> { where(published_at: nil) }
 
   def publish
