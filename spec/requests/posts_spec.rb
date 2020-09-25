@@ -2,25 +2,27 @@ require 'rails_helper'
 
 
 RSpec.describe '/posts', type: :request do
-  let(:valid_attributes) { attributes_for(:post).merge(author: create(:user)) }
+  let(:user) { create(:user) }
+
+  let(:valid_attributes) { attributes_for(:post) }
   let(:invalid_attributes) { attributes_for(:post, title: nil) }
 
   before(:each) do
-    sign_in create(:user)
+    sign_in user
   end
 
   describe 'GET /index' do
+    let!(:blog_post) { create(:post, author: user)}
     it 'renders a successful response' do
-      Post.create! valid_attributes
       get posts_url
       expect(response).to be_successful
     end
   end
 
   describe 'GET /show' do
+    let!(:blog_post) { create(:post, author: user)}
     it 'renders a successful response' do
-      post = Post.create! valid_attributes
-      get post_url(post)
+      get post_url(blog_post)
       expect(response).to be_successful
     end
   end
@@ -33,9 +35,9 @@ RSpec.describe '/posts', type: :request do
   end
 
   describe 'GET /edit' do
+    let!(:blog_post) { create(:post, author: user)}
     it 'render a successful response' do
-      post = Post.create! valid_attributes
-      get edit_post_url(post)
+      get edit_post_url(blog_post)
       expect(response).to be_successful
     end
   end
@@ -48,9 +50,9 @@ RSpec.describe '/posts', type: :request do
         }.to change(Post, :count).by(1)
       end
 
-      it 'redirects to the created post' do
+      it 'redirects to your posts list' do
         post posts_url, params: { post: valid_attributes }
-        expect(response).to redirect_to(post_url(Post.last))
+        expect(response).to redirect_to(my_posts_url)
       end
     end
 
@@ -71,42 +73,40 @@ RSpec.describe '/posts', type: :request do
   describe 'PATCH /update' do
     context 'with valid parameters' do
       let(:new_attributes) { attributes_for(:post, title: 'Other title') }
+      let!(:blog_post) { create(:post, author: user)}
 
       it 'updates the requested post' do
-        post = Post.create! valid_attributes
-        patch post_url(post), params: { post: new_attributes }
-        post.reload
-        expect(post.title).to eq 'Other title'
+        patch post_url(blog_post), params: { post: new_attributes }
+        blog_post.reload
+        expect(blog_post.title).to eq 'Other title'
       end
 
       it 'redirects to the post' do
-        post = Post.create! valid_attributes
-        patch post_url(post), params: { post: new_attributes }
-        post.reload
-        expect(response).to redirect_to(post_url(post))
+        patch post_url(blog_post), params: { post: new_attributes }
+        blog_post.reload
+        expect(response).to redirect_to(post_url(blog_post))
       end
     end
 
     context 'with invalid parameters' do
+      let!(:blog_post) { create(:post, author: user)}
       it 'renders a successful response (i.e. to display the \'edit\' template)' do
-        post = Post.create! valid_attributes
-        patch post_url(post), params: { post: invalid_attributes }
+        patch post_url(blog_post), params: { post: invalid_attributes }
         expect(response).to be_successful
       end
     end
   end
 
   describe 'DELETE /destroy' do
+    let!(:blog_post) { create(:post, author: user)}
     it 'destroys the requested post' do
-      post = Post.create! valid_attributes
       expect {
-        delete post_url(post)
+        delete post_url(blog_post)
       }.to change(Post, :count).by(-1)
     end
 
     it 'redirects to the posts list' do
-      post = Post.create! valid_attributes
-      delete post_url(post)
+      delete post_url(blog_post)
       expect(response).to redirect_to(posts_url)
     end
   end

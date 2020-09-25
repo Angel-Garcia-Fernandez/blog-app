@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :reaction do
-    type { 'like' }
+    reaction_type { :like }
     author factory: :user
     comment
   end

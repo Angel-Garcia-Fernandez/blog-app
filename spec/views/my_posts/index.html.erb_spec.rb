@@ -9,7 +9,7 @@ RSpec.describe 'my_posts/index', type: :view do
   end
   it 'renders a list of drafts' do
     render
-    assert_select 'tr>td', text: 'Title'.to_s, count: 2
-    assert_select 'tr>td', text: 'MyText'.to_s, count: 2
+    assert_select '.card h5.card-title', text: 'Title'.to_s, count: 2
+    assert_select '.card p.card-text', text: 'MyText'.to_s, count: 2
   end
 end
